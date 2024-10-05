@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+
+    <title>Registration Form</title>
+</head>
+<body class="bg-indigo-500">
+<form action="" id="registrationForm" onsubmit="return validateForm()">
+    <div class="mx-2 my-2">
+        <div class="ml-4 mb-4">
+            <h1 class="text-3xl ">REGISTRATION FORM</h1>
+        </div>
+
+        <div class="mx-2 my-2">
+            <label for="username" class="text-white">Name</label><br>
+            <input type="text" name="username" class="w-3/4 h-10" placeholder="Enter your name" id="username" required>
+        </div>
+
+        <div class="mx-2 my-2">
+            <label for="user-email" class="text-white">Email</label><br>
+            <input type="email" name="user-email" class="w-3/4 h-10" placeholder="Enter your email" id="email" required>
+        </div>
+
+        <div class="mx-2 my-2">
+            <label for="user-password" class="text-white">Password</label><br>
+            <input type="password" name="user-password" id="password" class="w-3/4 h-10" placeholder="Enter your password" required>
+        </div>
+
+        <div class="mx-2 my-2">
+            <label for="user-dob" class="text-white">Date Of Birth</label><br>
+            <input type="date" name="user-dob" class="w-3/4 h-10" id="dob" required>
+        </div>
+
+        <div class="mx-2 my-2 mb-4">
+            <input type="checkbox" name="checkbox" id="checkbox" class="text-white" required>
+            <label for="checkbox" class="text-white">Accept Terms & Conditions</label>
+        </div>
+
+        <button type="submit" class="border-2 w-1/12 text-white border-indigo-700 shadow-md mb-6">Submit</button>
+    </div>
+</form>
+
+<div class="">
+    <div class="ml-4 mb-4 ">
+        <h1 class="text-2xl ">ENTRIES</h1>
+    </div>
+    <table class="border-2 border-collapse border-gray-800 w-full">
+        <thead>
+            <tr>
+                <th class="border border-gray-800 p-2">Name</th>
+                <th class="border border-gray-800 p-2">Email</th>
+                <th class="border border-gray-800 p-2">Password</th>
+                <th class="border border-gray-800 p-2">DOB</th>
+                <th class="border border-gray-800 p-2">Accepted Terms?</th>
+            </tr>
+        </thead>
+        <tbody id="userData"></tbody>
+    </table>
+</div>
+
+<script src="index.js"></script>
+</body>
+</html>
