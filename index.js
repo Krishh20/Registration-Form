@@ -1,4 +1,4 @@
-  window.onload = function() {
+ window.onload = function() {
             loadEntries(); // Load entries when the page is loaded
         }
 
@@ -13,14 +13,14 @@
             // Check if fields are empty
             if (!username || !email || !password || !dobInput || !checkbox) {
                 alert('Please fill out all fields correctly.');
-                return false;
+                return false; // Prevent form submission
             }
 
             // Email format validation
             const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
             if (!emailPattern.test(email)) {
                 alert('Please enter a valid email address.');
-                return false;
+                return false; // Prevent form submission
             }
 
             // Date of birth validation
@@ -30,7 +30,7 @@
             endDate.setFullYear(endDate.getFullYear() - 18); // 18 years ago
             if (dob < startDate || dob > endDate) {
                 alert('You must be between 18 and 55 years old.');
-                return false;
+                return false; // Prevent form submission
             }
 
             // Check for existing user before adding
@@ -42,6 +42,7 @@
             // Add entry to the table and store in localStorage
             addToTable(username, email, password, dob.toLocaleDateString(), checkbox);
             document.getElementById('registrationForm').reset();
+
             return false; // Prevent default form submission
         }
 
@@ -63,7 +64,6 @@
             `;
 
             tableBody.appendChild(row); // Append new entry at the end
-             console.log("Loaded entries from localStorage:", existingUsers); 
             storeInLocalStorage(name, email, password, dob, acceptedTerms); // Store in localStorage
         }
 
