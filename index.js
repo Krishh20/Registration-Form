@@ -24,8 +24,10 @@
             }
 
             // Date of birth validation
-            const startDate = new Date('1967-11-09');
-            const endDate = new Date('2004-11-09');
+            const startDate = new Date();
+            startDate.setFullYear(startDate.getFullYear() - 55); // 55 years ago
+            const endDate = new Date();
+            endDate.setFullYear(endDate.getFullYear() - 18); // 18 years ago
             if (dob < startDate || dob > endDate) {
                 alert('You must be between 18 and 55 years old.');
                 return false;
@@ -37,6 +39,7 @@
                 return false; // Prevent form submission
             }
 
+            // Add entry to the table and store in localStorage
             addToTable(username, email, password, dob.toLocaleDateString(), checkbox);
             document.getElementById('registrationForm').reset();
             return false; // Prevent default form submission
@@ -59,8 +62,8 @@
                 <td class="border border-gray-800 p-2 text-white">${acceptedTerms ? 'Yes' : 'No'}</td>
             `;
 
-            tableBody.appendChild(row);
-            storeInLocalStorage(name, email, password, dob, acceptedTerms);
+            tableBody.appendChild(row); // Append new entry at the end
+            storeInLocalStorage(name, email, password, dob, acceptedTerms); // Store in localStorage
         }
 
         function storeInLocalStorage(name, email, password, dob, acceptedTerms) {
@@ -74,13 +77,27 @@
 
             const existingUsers = JSON.parse(localStorage.getItem('users')) || [];
             existingUsers.push(userData);
-            localStorage.setItem('users', JSON.stringify(existingUsers));
+            localStorage.setItem('users', JSON.stringify(existingUsers)); // Save all users
         }
 
         function loadEntries() {
             const existingUsers = JSON.parse(localStorage.getItem('users')) || [];
+            const tableBody = document.getElementById('userData');
+
+            // Clear the table before adding entries
+            tableBody.innerHTML = '';
+
+            // Append existing user entries to the table
             existingUsers.forEach(user => {
-                addToTable(user.name, user.email, user.password, user.dob, user.acceptedTerms);
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td class="border border-gray-800 p-2 text-white">${user.name}</td>
+                    <td class="border border-gray-800 p-2 text-white">${user.email}</td>
+                    <td class="border border-gray-800 p-2 text-white">${user.password}</td>
+                    <td class="border border-gray-800 p-2 text-white">${user.dob}</td>
+                    <td class="border border-gray-800 p-2 text-white">${user.acceptedTerms ? 'Yes' : 'No'}</td>
+                `;
+                tableBody.appendChild(row); // Append each user entry
             });
         }
 
