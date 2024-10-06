@@ -22,7 +22,7 @@ function validateForm() {
     const startDate = new Date('1967-11-09');
     const endDate = new Date('2004-11-09');
     if (dob < startDate || dob > endDate) {
-        alert('Date of Birth must be between 09-11-1967 and 09-11-2004.');
+        alert('Age must be between 18 to 55.');
         return false;
     }
 
