@@ -1,5 +1,10 @@
 window.onload = function() {
     loadEntries(); // Load entries when the page is loaded
+    const form = document.getElementById('registrationForm');
+    form.addEventListener('submit', function(event) {
+        event.preventDefault(); // Prevent the default form submission
+        validateForm(); // Call validateForm
+    });
 }
 
 function validateForm() {
@@ -106,4 +111,5 @@ function clearUsers() {
     localStorage.removeItem('users'); // Clear specific users from localStorage
     document.getElementById('userData').innerHTML = ''; // Clear the displayed entries
 }
+
 
