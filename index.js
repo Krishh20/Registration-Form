@@ -63,6 +63,7 @@
             `;
 
             tableBody.appendChild(row); // Append new entry at the end
+             console.log("Loaded entries from localStorage:", existingUsers); 
             storeInLocalStorage(name, email, password, dob, acceptedTerms); // Store in localStorage
         }
 
