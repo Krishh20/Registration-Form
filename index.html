@@ -7,15 +7,15 @@
     <title>Registration Form</title>
 </head>
 <body class="bg-indigo-500">
-    <form id="registrationForm">
+    <form action="" id="registrationForm" >
         <div class="mx-2 my-2">
             <div class="ml-4 mb-4">
-                <h1 class="text-3xl">REGISTRATION FORM</h1>
+                <h1 class="text-3xl ">REGISTRATION FORM</h1>
             </div>
 
             <div class="mx-2 my-2">
                 <label for="username" class="text-white">Name</label><br>
-                <input type="text" name="username" class="w-3/4 h-10" placeholder="Enter your name" id="username" required>
+                <input type="text" name="username" class="w-3/4 h-10" placeholder="Enter your name" id="name" required>
             </div>
 
             <div class="mx-2 my-2">
@@ -34,7 +34,7 @@
             </div>
 
             <div class="mx-2 my-2 mb-4">
-                <input type="checkbox" name="checkbox" id="checkbox" class="text-white" required>
+                <input type="checkbox" name="checkbox" id="acceptTerms" class="text-white" required>
                 <label for="checkbox" class="text-white">Accept Terms & Conditions</label>
             </div>
 
@@ -43,23 +43,11 @@
     </form>
 
     <div class="">
-        <div class="ml-4 mb-4">
-            <h1 class="text-2xl">ENTRIES</h1>
+        <div class="ml-4 mb-4 ">
+            <h1 class="text-2xl ">ENTRIES</h1>
         </div>
-        <table class="border-2 border-collapse border-gray-800 w-full">
-            <thead>
-                <tr>
-                    <th class="border border-gray-800 p-2">Name</th>
-                    <th class="border border-gray-800 p-2">Email</th>
-                    <th class="border border-gray-800 p-2">Password</th>
-                    <th class="border border-gray-800 p-2">DOB</th>
-                    <th class="border border-gray-800 p-2">Accepted Terms?</th>
-                </tr>
-            </thead>
-            <tbody id="userData"></tbody>
-        </table>
+      <div id="user-entries"></div>
     </div>
-    <button onclick="clearUsers()" class="mt-4 border-2 text-white border-indigo-700 shadow-md mb-6">Clear Users</button>
     <script src="index.js"></script>
 </body>
 </html>
