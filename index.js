@@ -1,116 +1,85 @@
-window.onload = function() {
-    loadEntries(); // Load entries when the page is loaded
-    const form = document.getElementById('registrationForm');
-    form.addEventListener('submit', function(event) {
-        event.preventDefault(); // Prevent the default form submission
-        validateForm(); // Call validateForm
-    });
+let userForm = document.getElementById("registrationForm");
+var userEntries=[];
+
+let errors=[]
+const retieveEntries = ()=>{
+    let entries = localStorage.getItem('userEntries')
+    if(entries){
+        entries=JSON.parse(entries)
+    }else{
+        entries=[]
+    }
+    return entries
+}
+const displayEntries = ()=>{
+let entries=retieveEntries()
+const tbleEntries = entries.map((entry)=>{
+const nameCell = `<td class='border border-gray-800 p-2 text-white'>${entry.FullName}</td>`
+const emailCell = `<td class='border border-gray-800 p-2 text-white'>${entry.email}</td>`
+const passwordCell = `<td class='border border-gray-800 p-2 text-white'>${entry.password}</td>`
+const dobCell = `<td class='border border-gray-800 p-2 text-white'>${entry.dob}</td>`
+const acceptTermsCell = `<td class='border border-gray-800 p-2 text-white'>${entry.acceptTerms}</td>`
+const row = `<tr>${nameCell} ${emailCell} ${passwordCell} ${dobCell} ${acceptTermsCell}</tr>`
+return row
+
+}).join('\n')
+const table =` <table class='table-auto w-full'>
+    <tr>
+    <th class='border border-gray-800 p-2 '>Name </th>
+    <th class='border border-gray-800 p-2'>Email </th>
+    <th class='border border-gray-800 p-2 '>Password </th>
+    <th class='border border-gray-800 p-2 '>Dob </th>
+    <th class='border border-gray-800 p-2 '>Accepted terms? </th>
+    </tr>${tbleEntries}
+</table>`
+let details = document.getElementById('user-entries') //check
+details.innerHTML=table
 }
 
-function validateForm() {
-    const username = document.getElementById('username').value.trim();
-    const email = document.getElementById('email').value.trim();
-    const password = document.getElementById('password').value.trim();
-    const dobInput = document.getElementById('dob').value;
-    const dob = new Date(dobInput);
-    const checkbox = document.getElementById('checkbox').checked;
+const saveUserForm = (event)=>{
+event.preventDefault();
+const FullName = document.getElementById('name').value
+const email = document.getElementById('email').value
+const password = document.getElementById('password').value
+const dob = document.getElementById('dob').value
+const acceptTerms = document.getElementById('acceptTerms').checked
+var currentYear = new Date().getFullYear();
+var birthYear = dob.split("-");
+let year=birthYear[0]
+var age = currentYear-year
+console.log({age,currentYear,birthYear})
+if(age < 18 || age > 55){
+    document.getElementById('dob').style='border:1px solid red'
+  return  alert("Age must be between 18 and 55")
 
-    // Check if fields are empty
-    if (!username || !email || !password || !dobInput || !checkbox) {
-        alert('Please fill out all fields correctly.');
-        return false; // Prevent form submission
-    }
+}else{
+    document.getElementById('dob').style='border:none'
 
-    // Email format validation
-    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailPattern.test(email)) {
-        alert('Please enter a valid email address.');
-        return false; // Prevent form submission
-    }
-
-    // Date of birth validation
-    const startDate = new Date();
-    startDate.setFullYear(startDate.getFullYear() - 55); // 55 years ago
-    const endDate = new Date();
-    endDate.setFullYear(endDate.getFullYear() - 18); // 18 years ago
-    if (dob < startDate || dob > endDate) {
-        alert('You must be between 18 and 55 years old.');
-        return false; // Prevent form submission
-    }
-
-    // Check for existing user before adding
-    if (isUserExists(email)) {
-        alert('User with this email already exists.');
-        return false; // Prevent form submission
-    }
-
-    // Add entry to the table and store in localStorage
-    addToTable(username, email, password, dob.toLocaleDateString(), checkbox);
-    document.getElementById('registrationForm').reset();
-
-    return false; // Prevent default form submission
-}
-
-function isUserExists(email) {
-    const existingUsers = JSON.parse(localStorage.getItem('users')) || [];
-    return existingUsers.some(user => user.email === email);
-}
-
-function addToTable(name, email, password, dob, acceptedTerms) {
-    const tableBody = document.getElementById('userData');
-    const row = document.createElement('tr');
-
-    row.innerHTML = `
-        <td class="border border-gray-800 p-2 text-white">${name}</td>
-        <td class="border border-gray-800 p-2 text-white">${email}</td>
-        <td class="border border-gray-800 p-2 text-white">${password}</td>
-        <td class="border border-gray-800 p-2 text-white">${dob}</td>
-        <td class="border border-gray-800 p-2 text-white">${acceptedTerms ? 'Yes' : 'No'}</td>
-    `;
-
-    tableBody.appendChild(row); // Append new entry at the end
-    storeInLocalStorage(name, email, password, dob, acceptedTerms); // Store in localStorage
-}
-
-function storeInLocalStorage(name, email, password, dob, acceptedTerms) {
-    const userData = {
-        name,
+    const entry ={
+        FullName,
         email,
         password,
         dob,
-        acceptedTerms
-    };
+        acceptTerms
+     }
+     userEntries=retieveEntries()
+     userEntries.push(entry);
+     localStorage.setItem("userEntries",JSON.stringify(userEntries))
+    displayEntries()
+    registrationForm.reset()
 
-    const existingUsers = JSON.parse(localStorage.getItem('users')) || [];
-    existingUsers.push(userData);
-    localStorage.setItem('users', JSON.stringify(existingUsers)); // Save all users
 }
 
-function loadEntries() {
-    const existingUsers = JSON.parse(localStorage.getItem('users')) || [];
-    const tableBody = document.getElementById('userData');
-
-    // Clear the table before adding entries
-    tableBody.innerHTML = '';
-
-    // Append existing user entries to the table
-    existingUsers.forEach(user => {
-        const row = document.createElement('tr');
-        row.innerHTML = `
-            <td class="border border-gray-800 p-2 text-white">${user.name}</td>
-            <td class="border border-gray-800 p-2 text-white">${user.email}</td>
-            <td class="border border-gray-800 p-2 text-white">${user.password}</td>
-            <td class="border border-gray-800 p-2 text-white">${user.dob}</td>
-            <td class="border border-gray-800 p-2 text-white">${user.acceptedTerms ? 'Yes' : 'No'}</td>
-        `;
-        tableBody.appendChild(row); // Append each user entry
-    });
 }
+registrationForm.addEventListener('submit',saveUserForm)
+displayEntries()
 
-function clearUsers() {
-    localStorage.removeItem('users'); // Clear specific users from localStorage
-    document.getElementById('userData').innerHTML = ''; // Clear the displayed entries
-}
+// function clearUsers() {
+//     localStorage.removeItem('userEntries'); // Clear specific users from localStorage
+//     document.getElementById('userData').innerHTML = ''; // Clear the displayed entries
+// }
+
+// clearUsers()
 
 
 
