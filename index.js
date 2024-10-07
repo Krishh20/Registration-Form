@@ -1,4 +1,4 @@
-let userForm = document.getElementById("registrationForm");
+      let userForm = document.getElementById("user_form");
 var userEntries=[];
 
 let errors=[]
@@ -14,25 +14,25 @@ const retieveEntries = ()=>{
 const displayEntries = ()=>{
 let entries=retieveEntries()
 const tbleEntries = entries.map((entry)=>{
-const nameCell = `<td class='border border-gray-800 p-2 text-white'>${entry.FullName}</td>`
-const emailCell = `<td class='border border-gray-800 p-2 text-white'>${entry.email}</td>`
-const passwordCell = `<td class='border border-gray-800 p-2 text-white'>${entry.password}</td>`
-const dobCell = `<td class='border border-gray-800 p-2 text-white'>${entry.dob}</td>`
-const acceptTermsCell = `<td class='border border-gray-800 p-2 text-white'>${entry.acceptTerms}</td>`
+const nameCell = `<td class='border px-4 py-2'>${entry.FullName}</td>`
+const emailCell = `<td class='border px-4 py-2'>${entry.email}</td>`
+const passwordCell = `<td class='border px-4 py-2'>${entry.password}</td>`
+const dobCell = `<td class='border px-4 py-2'>${entry.dob}</td>`
+const acceptTermsCell = `<td class='border px-4 py-2'>${entry.acceptTerms}</td>`
 const row = `<tr>${nameCell} ${emailCell} ${passwordCell} ${dobCell} ${acceptTermsCell}</tr>`
 return row
 
 }).join('\n')
 const table =` <table class='table-auto w-full'>
     <tr>
-    <th class='border border-gray-800 p-2 '>Name </th>
-    <th class='border border-gray-800 p-2'>Email </th>
-    <th class='border border-gray-800 p-2 '>Password </th>
-    <th class='border border-gray-800 p-2 '>Dob </th>
-    <th class='border border-gray-800 p-2 '>Accepted terms? </th>
+    <th class='px-4 py-2 '>Name </th>
+    <th class='px-4 py-2 '>Email </th>
+    <th class='px-4 py-2 '>Password </th>
+    <th class='px-4 py-2 '>Dob </th>
+    <th class='px-4 py-2 '>Accepted terms? </th>
     </tr>${tbleEntries}
 </table>`
-let details = document.getElementById('user-entries') //check
+let details = document.getElementById('user-entries')
 details.innerHTML=table
 }
 
@@ -66,20 +66,13 @@ if(age < 18 || age > 55){
      userEntries.push(entry);
      localStorage.setItem("userEntries",JSON.stringify(userEntries))
     displayEntries()
-    registrationForm.reset()
+    userForm.reset()
 
 }
 
 }
-registrationForm.addEventListener('submit',saveUserForm)
+userForm.addEventListener('submit',saveUserForm)
 displayEntries()
-
-// function clearUsers() {
-//     localStorage.removeItem('userEntries'); // Clear specific users from localStorage
-//     document.getElementById('userData').innerHTML = ''; // Clear the displayed entries
-// }
-
-// clearUsers()
 
 
 
